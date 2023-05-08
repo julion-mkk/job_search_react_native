@@ -3,6 +3,7 @@ import {View, Text, TextInput, TouchableOpacity, Image, FlatList} from 'react-na
 import styles from './welcome.style'
 import {useRouter} from "expo-router";
 import {icons, SIZES} from "../../../constants";
+import {Popularjobs} from "../../index";
 
 const jobTypes = ["Part-time", "Full-time", "Freelance"];
 const Welcome = () => {
