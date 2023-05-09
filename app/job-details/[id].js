@@ -36,27 +36,26 @@ const JobDetails = ()=> {
                             dimension='60%'/>
                     ),
                     //headerTitle : ''
-            }}>
-                <>
-                    <ScrollView showsVerticalScrollIndicator={false} refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
-                    }>
-                        {isLoading? (
-                            <ActivityIndicator size="large" color={COLORS.primary} />
-                        ) : error? (
-                            <Text>Something went wrong!</Text>
-                        ) : data.length===0? (
-                            <Text style={{color: 'black'}}>No Data</Text>
-                        ) : (
-                            <View style={{padding: SIZES.medium, paddingBottom: 100}}>
-                                <Company />
-                                <JobTabs />
+            }}/>
+            <>
+                <ScrollView showsVerticalScrollIndicator={false} refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+                }>
+                    {isLoading? (
+                        <ActivityIndicator size="large" color={COLORS.primary} />
+                    ) : error? (
+                        <Text>Something went wrong!</Text>
+                    ) : data.length===0? (
+                        <Text style={{color: 'black'}}>No Data</Text>
+                    ) : (
+                        <View style={{padding: SIZES.medium, paddingBottom: 100}}>
+                            <Company />
+                            <JobTabs />
 
-                            </View>
-                        )}
-                    </ScrollView>
-                </>
-            </Stack.Screen>
+                        </View>
+                    )}
+                </ScrollView>
+            </>
         </SafeAreaView>
     );
 }
