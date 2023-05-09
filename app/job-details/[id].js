@@ -49,7 +49,12 @@ const JobDetails = ()=> {
                         <Text style={{color: 'black'}}>No Data</Text>
                     ) : (
                         <View style={{padding: SIZES.medium, paddingBottom: 100}}>
-                            <Company />
+                            <Company
+                                companyLogo = {data[0].employer_logo}
+                                companyName = {data[0].employer_name}
+                                jobTitle = {data[0].job_title}
+                                location = {data[0].job_country}
+                            />
                             <JobTabs />
 
                         </View>
