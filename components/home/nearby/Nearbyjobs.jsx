@@ -15,6 +15,8 @@ const NearbyJobs = () => {
             num_pages : 1
         }
     );
+    console.log('hello from the other side');
+    console.log(error);
     return (
         <View style={styles.container}>
             <View style={styles.header}>

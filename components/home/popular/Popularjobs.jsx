@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View, Text, TouchableOpacity, ActivityIndicator, FlatList} from 'react-native'
 
 import styles from './popularjobs.style'
@@ -15,6 +15,11 @@ const Popularjobs = () => {
             num_pages : 1
         }
     );
+    const [selectedJob, setSelectedJob] = useState();
+    const handleCardPress = (item) => {
+        router.push(`/job-details/${item.job_id}`);
+        setSelectedJob(item.job_id);
+    }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -32,9 +37,12 @@ const Popularjobs = () => {
                     data={data}
                     renderItem={({item})=> (
                         <PopularJobCard
-                            item={item}/>
+                            item={item}
+                            selectedJob={selectedJob}
+                            handleCardPress={handleCardPress}
+                        />
                     )}
-                    keyExtractor={item => item?.itemId}
+                    keyExtractor={item => item?.job_id}
                     contentContainerStyle={{columnGap: SIZES.medium}}
                     horizontal
                 /> }

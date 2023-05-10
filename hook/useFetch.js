@@ -11,7 +11,7 @@ const UseFetch = (endPoint, query) => {
         url: `https://jsearch.p.rapidapi.com/${endPoint}`,
         params: {...query},
         headers: {
-            'X-RapidAPI-Key': '8059ccb76fmsh050338a375e9e0ep1528ccjsncca5b7a318ca',
+            'X-RapidAPI-Key': '36b3f54f4cmsh7c965e68088b010p19655ejsn1a39d65b9d62',
             'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
         }
     };
@@ -25,6 +25,7 @@ const UseFetch = (endPoint, query) => {
             setData(response.data.data);
             setLoading(false);
         }catch (error) {
+            console.log(error + "asdf");
             setError(error);
             alert("There is an error");
         } finally {

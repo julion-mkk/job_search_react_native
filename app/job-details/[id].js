@@ -2,13 +2,15 @@ import {View, Text, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator}
 import {Stack, useRouter, useSearchParams} from "expo-router";
 import UseFetch from "../../hook/useFetch";
 import {COLORS, icons, SIZES} from "../../constants";
-import {Company, JobTabs, ScreenHeaderBtn} from "../../components";
-import {useState} from "react";
+import {Company, JobAbout, JobFooter, JobTabs, ScreenHeaderBtn, Specifics} from "../../components";
+import {useCallback, useState} from "react";
 
 const JobDetails = ()=> {
+    const tabs = ['About', 'Qualifications', 'Responsibilities'];
     const params = useSearchParams();
     const router = useRouter();
     const [refreshing, setRefreshing] = useState(false);
+    const [activeTab, setActiveTab] = useState(tabs[0]);
     console.log('asdfasdf');
     console.log(params.id);
     const { data, isLoading, error, refetch} = UseFetch('job-details', {
@@ -16,7 +18,32 @@ const JobDetails = ()=> {
     });
     console.log(error);
     console.log(data);
-    const onRefresh = ()=> {}
+    const onRefresh = useCallback(()=> {
+        setRefreshing(true);
+        refetch();
+        setRefreshing(false);
+    }, []);
+
+    const displayTabContent = ()=> {
+        switch (activeTab) {
+            case tabs[0] :
+                return <JobAbout
+                    info={data[0].job_description ?? "No data provided"} />;
+                break;
+            case tabs[1] :
+                return <Specifics
+                    title={tabs[1]}
+                    points={data[0].job_highlights?.Qualifications ?? ["N/A"]} />;
+                break;
+            case tabs[2] :
+                return <Specifics
+                    title={tabs[2]}
+                    points={data[0].job_highlights?.Responsibilities ?? ["N/A"]} />;
+                break;
+            default:
+                break;
+        }
+    }
     return(
         <SafeAreaView style={{flex:1, backgroundColor: COLORS.lightWhite}}>
             <Stack.Screen
@@ -35,7 +62,7 @@ const JobDetails = ()=> {
                             iconUrl={icons.share}
                             dimension='60%'/>
                     ),
-                    //headerTitle : ''
+                    headerTitle : ''
             }}/>
             <>
                 <ScrollView showsVerticalScrollIndicator={false} refreshControl={
@@ -55,11 +82,20 @@ const JobDetails = ()=> {
                                 jobTitle = {data[0].job_title}
                                 location = {data[0].job_country}
                             />
-                            <JobTabs />
+                            <JobTabs
+                                tabs = {tabs}
+                                activeTab = {activeTab}
+                                setActiveTab = {setActiveTab}
+                            />
 
+                            {displayTabContent()}
                         </View>
                     )}
                 </ScrollView>
+
+                <JobFooter
+                    url={data[0]?.job_google_link ?? "https://www.careers.google.com/jobs/result"}
+                />
             </>
         </SafeAreaView>
     );
